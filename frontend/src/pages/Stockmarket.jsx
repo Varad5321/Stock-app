@@ -76,7 +76,7 @@ function Stockmarket() {
 
   // 🔌 WebSocket connect once
   useEffect(() => {
-    const socket = new WebSocket("ws://localhost:5000");
+    const socket = new WebSocket("wsshttps://stock-app-r4pp.onrender.com");
     ws.current = socket;
 
     socket.onopen = () => {
