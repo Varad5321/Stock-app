@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   createChart,
   CandlestickSeries
@@ -9,13 +9,32 @@ const CandlestickChart = ({ data }) => {
   const chartRef = useRef(null);
   const seriesRef = useRef(null);
   const isUserScrollingRef = useRef(false);
+  const [chartHeight, setChartHeight] = useState(400);
+
+  // Handle responsive height
+  useEffect(() => {
+    const updateHeight = () => {
+      if (chartContainerRef.current) {
+        const parentHeight = chartContainerRef.current.parentElement?.clientHeight || 400;
+        setChartHeight(Math.max(300, parentHeight - 60));
+      }
+    };
+
+    updateHeight();
+    const resizeObserver = new ResizeObserver(updateHeight);
+    if (chartContainerRef.current?.parentElement) {
+      resizeObserver.observe(chartContainerRef.current.parentElement);
+    }
+
+    return () => resizeObserver.disconnect();
+  }, []);
 
   useEffect(() => {
     if (!chartContainerRef.current) return;
 
     const chart = createChart(chartContainerRef.current, {
       width: chartContainerRef.current.clientWidth,
-      height: 400,
+      height: chartHeight,
 
       layout: {
         background: { color: "#ffffff" },
@@ -53,8 +72,20 @@ const CandlestickChart = ({ data }) => {
 
     chart.timeScale().fitContent();
 
-    return () => chart.remove();
-  }, []); // Empty dependency array - chart created once
+    const handleResize = () => {
+      if (chartContainerRef.current) {
+        chart.applyOptions({
+          width: chartContainerRef.current.clientWidth,
+        });
+      }
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+      chart.remove();
+    };
+  }, [chartHeight]);
 
   useEffect(() => {
     if (!chartRef.current || !seriesRef.current) return;
@@ -68,7 +99,7 @@ const CandlestickChart = ({ data }) => {
     }
   }, [data]);
 
-  return <div ref={chartContainerRef} style={{ width: "100%" }} />;
+  return <div ref={chartContainerRef} style={{ width: "100%", height: "100%" }} />;
 };
 
 export default CandlestickChart;

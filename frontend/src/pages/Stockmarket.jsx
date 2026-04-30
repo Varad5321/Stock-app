@@ -161,30 +161,32 @@ function Stockmarket() {
   return (
     <div
       style={{
-        padding: 20,
+        padding: "clamp(10px, 5vw, 20px)",
         fontFamily: "Arial, sans-serif",
-        height: "100vh",
+        minHeight: "100vh",
         display: "grid",
         gridTemplateRows: "auto auto auto 1fr",
         backgroundColor: "#f5f5f5",
-        gap: 15,
-        overflow: "hidden",
+        gap: "clamp(10px, 3vw, 15px)",
+        maxWidth: "1400px",
+        margin: "0 auto",
       }}
     >
-      <h2 style={{ margin: 0, color: "#333" }}>📈 Live Stock Tracker</h2>
+      <h2 style={{ margin: 0, color: "#333", fontSize: "clamp(1.5rem, 5vw, 2rem)" }}>📈 Live Stock Tracker</h2>
 
       <div
         style={{
-          padding: 15,
+          padding: "clamp(12px, 3vw, 15px)",
           backgroundColor: "white",
           borderRadius: 8,
           boxShadow: "0 2px 8px rgba(0,0,0,0.1)",
           display: "flex",
+          flexWrap: "wrap",
           alignItems: "center",
-          gap: 15,
+          gap: "clamp(10px, 2vw, 15px)",
         }}
       >
-        <label htmlFor="symbol-select" style={{ margin: 0, fontWeight: 500, color: "#555" }}>
+        <label htmlFor="symbol-select" style={{ margin: 0, fontWeight: 500, color: "#555", fontSize: "clamp(0.85rem, 2vw, 1rem)" }}>
           Select Stock :
         </label>
         <select
@@ -192,13 +194,15 @@ function Stockmarket() {
           value={symbol}
           onChange={(e) => setSymbol(e.target.value)}
           style={{
-            padding: "8px 12px",
+            padding: "clamp(6px, 1.5vw, 8px) clamp(10px, 2vw, 12px)",
             borderRadius: 5,
             border: "2px solid #ddd",
             cursor: "pointer",
-            fontSize: "1em",
+            fontSize: "clamp(0.85rem, 2vw, 1rem)",
             transition: "all 0.2s",
             backgroundColor: "white",
+            flex: "1 1 auto",
+            minWidth: "120px",
           }}
         // onMouseEnter={(e) => (e.target.style.borderColor = "#4CAF50")}
         // onMouseLeave={(e) => (e.target.style.borderColor = "#ddd")}
@@ -213,19 +217,20 @@ function Stockmarket() {
           <option value="BTC/USD">Bitcoin</option>
         </select>
 
-        <div style={{ marginLeft: "auto", display: "flex", gap: 10 }}>
+        <div style={{ marginLeft: "auto", display: "flex", gap: "clamp(8px, 1.5vw, 10px)", flexWrap: "wrap" }}>
           <button
             onClick={() => setChartType("line")}
             style={{
-              padding: "8px 16px",
+              padding: "clamp(6px, 1.5vw, 8px) clamp(12px, 2vw, 16px)",
               borderRadius: 5,
               border: chartType === "line" ? "2px solid #4CAF50" : "2px solid #ddd",
               backgroundColor: chartType === "line" ? "#e8f5e9" : "white",
               cursor: "pointer",
-              fontSize: "0.9em",
+              fontSize: "clamp(0.8rem, 1.8vw, 0.9rem)",
               fontWeight: 500,
               color: chartType === "line" ? "#4CAF50" : "#555",
               transition: "all 0.2s",
+              whiteSpace: "nowrap",
             }}
           >
             Line
@@ -233,15 +238,16 @@ function Stockmarket() {
           <button
             onClick={() => setChartType("candlestick")}
             style={{
-              padding: "8px 16px",
+              padding: "clamp(6px, 1.5vw, 8px) clamp(12px, 2vw, 16px)",
               borderRadius: 5,
               border: chartType === "candlestick" ? "2px solid #4CAF50" : "2px solid #ddd",
               backgroundColor: chartType === "candlestick" ? "#e8f5e9" : "white",
               cursor: "pointer",
-              fontSize: "0.9em",
+              fontSize: "clamp(0.8rem, 1.8vw, 0.9rem)",
               fontWeight: 500,
               color: chartType === "candlestick" ? "#4CAF50" : "#555",
               transition: "all 0.2s",
+              whiteSpace: "nowrap",
             }}
           >
             Candlestick
@@ -252,17 +258,18 @@ function Stockmarket() {
       {currentPrice && (
         <div
           style={{
-            padding: 15,
+            padding: "clamp(12px, 3vw, 15px)",
             backgroundColor: "white",
             borderRadius: 8,
             boxShadow: "0 2px 8px rgba(0,0,0,0.1)",
             borderLeft: `5px solid ${color}`,
             display: "flex",
+            flexWrap: "wrap",
             alignItems: "center",
-            gap: 20,
+            gap: "clamp(15px, 3vw, 20px)",
           }}
         >
-          <h3 style={{ margin: 0, color, fontSize: "1.8em" }}>
+          <h3 style={{ margin: 0, color, fontSize: "clamp(1.3rem, 5vw, 1.8rem)" }}>
             ${currentPrice?.toFixed(2)}
           </h3>
           <span
@@ -272,11 +279,12 @@ function Stockmarket() {
               display: "flex",
               alignItems: "center",
               gap: 5,
+              fontSize: "clamp(0.8rem, 2vw, 1rem)",
             }}
           >
             ● LIVE
           </span>
-          <span>
+          <span style={{ fontSize: "clamp(0.8rem, 2vw, 0.95rem)" }}>
             IST :  {formatIST(candleData[candleData.length - 1]?.time)}
           </span>
         </div>
@@ -286,10 +294,11 @@ function Stockmarket() {
         <div
           style={{
             color: "#d32f2f",
-            padding: 15,
+            padding: "clamp(12px, 3vw, 15px)",
             backgroundColor: "#ffebee",
             borderRadius: 8,
             borderLeft: "5px solid #d32f2f",
+            fontSize: "clamp(0.85rem, 2vw, 1rem)",
           }}
         >
           {error}
@@ -300,10 +309,10 @@ function Stockmarket() {
         style={{
           backgroundColor: "white",
           borderRadius: 8,
-          padding: 15,
+          padding: "clamp(12px, 3vw, 15px)",
           boxShadow: "0 2px 8px rgba(0,0,0,0.1)",
           overflow: "hidden",
-          minHeight: 0,
+          minHeight: "300px",
         }}
       >
         {chartType === "line" ? (
