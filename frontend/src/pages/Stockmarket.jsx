@@ -121,7 +121,7 @@ function Stockmarket() {
   const fetchInitialData = useCallback(async () => {
     try {
       setError(null);
-      const res = await fetch(`http://localhost:5000/api/stock?symbol=${symbol}`);
+      const res = await fetch(`https://stock-app-r4pp.onrender.com/api/stock?symbol=${symbol}`);
       const data = await res.json();
 
       if (data.values) {
