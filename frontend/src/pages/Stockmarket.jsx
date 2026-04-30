@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState, useCallback } from "react";
+import { useEffect, useRef, useState, useCallback } from "react";
 import {
   Chart as ChartJS,
   LineElement,
@@ -42,8 +42,6 @@ function Stockmarket() {
       baseTimeRef.current = Math.floor(Date.now() / 1000);
     }
 
-    let baseTime = baseTimeRef.current;
-
     for (let i = 0; i < prices.length; i += chunkSize) {
       const chunk = prices.slice(i, i + chunkSize);
       if (chunk.length < chunkSize) break;
@@ -76,7 +74,7 @@ function Stockmarket() {
 
   // 🔌 WebSocket connect once
   useEffect(() => {
-    const socket = new WebSocket("wsshttps://stock-app-r4pp.onrender.com");
+    const socket = new WebSocket("wss://https://stock-app-r4pp.onrender.com");
     ws.current = socket;
 
     socket.onopen = () => {
