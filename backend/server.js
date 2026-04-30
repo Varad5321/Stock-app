@@ -5,7 +5,7 @@ const cors = require('cors');
 require('dotenv').config();
 
 const stockRoutes = require('./routes/stockRoutes');
-const { initWebSocket } = require('./websockets/webSocket.js');
+const { initWebSocket } = require('./webSockets/webSocket.js');
 
 const app = express();
 app.use(cors());
